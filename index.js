@@ -23,7 +23,24 @@ app.post('/', (req, res) => {
   body.id = id.toString();
   books.push(body);
   console.log(body);
+
   res.send('Book has been added');
+});
+
+app.put('/:id', (req, res) => {
+  const { id } = req.params;
+  const body = req.body;
+  const bookIndex = books.findIndex((b) => b.id === id);
+  books.splice(bookIndex, 1, body);
+  res.send('book updaated');
+});
+
+app.delete('/:id', (req, res) => {
+  const { id } = req.params;
+  const bookIndex = books.findIndex((b) => b.id === id);
+  if (bookIndex === -1) res.send('Book dont exist');
+  books.splice(bookIndex, 1);
+  res.send('book deleted');
 });
 
 const PORT = process.env.PORT || 3000;
